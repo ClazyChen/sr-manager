@@ -23,7 +23,7 @@ namespace sr {
         const char* name() const { return "三月七"; }
         Path path() const { return Path::Preservation; }
         Type type() const { return Type::Ice; }
-        int max_hp() const { return 160; }
+        int max_hp() const { return 165; }
         int max_mp() const { return 3; }
         int origin_mp() const { return 0; }
         int max_sp() const { return 0; }
