@@ -19,6 +19,10 @@ namespace sr {
             return EffectType::Fast;
         }
 
+        EffectAttr attr() const override {
+            return EffectAttr::Positive;
+        }
+
         std::string name() const override {
             return "加速";
         }
@@ -31,6 +35,14 @@ namespace sr {
             auto cost_before = unit.time_cost();
             // 增加目标速度
             unit.speed += speed;
+            auto cost_after = unit.time_cost();
+            battle.speed_bar.move(unit, cost_before, cost_after);
+        }
+
+        void on_remove(Battle& battle, BattleUnit& unit) {
+            auto cost_before = unit.time_cost();
+            // 减少目标速度
+            unit.speed -= speed;
             auto cost_after = unit.time_cost();
             battle.speed_bar.move(unit, cost_before, cost_after);
         }

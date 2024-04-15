@@ -20,6 +20,10 @@ namespace sr {
             return EffectType::Burn;
         }
 
+        EffectAttr attr() const override {
+            return EffectAttr::Negative;
+        }
+
         std::string name() const override {
             return "灼烧";
         }

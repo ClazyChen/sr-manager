@@ -10,6 +10,7 @@ project (sr-manager LANGUAGES CXX)
 if (MSVC)
   add_compile_options(/utf-8)
   add_compile_options(/EHsc)
+  add_compile_options(/O2)
 endif()
 
 add_executable (sr-manager
@@ -32,6 +33,7 @@ add_executable (sr-manager
     "battle/MpUp.hpp"
     "battle/Procedure.hpp"
     "battle/ReduceToughness.hpp"
+    "battle/RemoveDebuff.hpp"
     "battle/SpeedBar.hpp"
     "battle/TurnBegin.hpp"
     "cli/BattleCli.hpp"
@@ -53,8 +55,11 @@ add_executable (sr-manager
     "utils/effects/Burn.hpp"
     "utils/effects/DefDown.hpp"
     "utils/effects/Fast.hpp"
+    "utils/effects/Freeze.hpp"
     "utils/effects/ResistDown.hpp"
+    "utils/effects/Shield.hpp"
     "utils/effects/Slow.hpp"
+    "utils/effects/Taunt.hpp"
     "utils/effects/TempAtk.hpp"
     "utils/effects/TempPen.hpp"
     "utils/effects/WindShear.hpp"
@@ -62,6 +67,10 @@ add_executable (sr-manager
     "utils/Fire/Himeko/HimekoAeq.hpp"
     "utils/Fire/Himeko/HimekoPassive.hpp"
     "utils/Fire/Himeko/HimekoStars.hpp"
+    "utils/Ice/March7th/March7th.hpp"
+    "utils/Ice/March7th/March7thAeq.hpp"
+    "utils/Ice/March7th/March7thPassive.hpp"
+    "utils/Ice/March7th/March7thStars.hpp"
     "utils/imaginary/Welt/Welt.hpp"
     "utils/imaginary/Welt/WeltAeq.hpp"
     "utils/imaginary/Welt/WeltPassive.hpp"

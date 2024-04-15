@@ -19,6 +19,10 @@ namespace sr {
             return EffectType::Slow;
         }
 
+        EffectAttr attr() const override {
+            return EffectAttr::Negative;
+        }
+
         std::string name() const override {
             return "减速";
         }
@@ -31,6 +35,14 @@ namespace sr {
             auto cost_before = unit.time_cost();
             // 降低目标速度
             unit.speed -= damage;
+            auto cost_after = unit.time_cost();
+            battle.speed_bar.move(unit, cost_before, cost_after);
+        }
+
+        void on_remove(Battle& battle, BattleUnit& unit) {
+            auto cost_before = unit.time_cost();
+            // 恢复目标速度
+            unit.speed += damage;
             auto cost_after = unit.time_cost();
             battle.speed_bar.move(unit, cost_before, cost_after);
         }

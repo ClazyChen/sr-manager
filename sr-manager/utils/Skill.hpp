@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../battle/Battle.hpp"
+#include "effects/Taunt.hpp"
 #include <string>
 #include <functional>
 
@@ -34,6 +35,7 @@ namespace sr {
         , Burn // 灼烧
         , Shock // 触电
         , WindShear // 风化
+        , Freeze // 冻结
         
     };
 
@@ -56,6 +58,7 @@ namespace sr {
             case Tag::Burn: return "灼烧";
             case Tag::Shock: return "触电";
             case Tag::WindShear: return "风化";
+            case Tag::Freeze: return "冻结";
         }
         return "未知";
     }
@@ -69,8 +72,17 @@ namespace sr {
     protected:
         // 单体攻击技能的通用选择方法
         BattleUnit& target_ai_single(Battle& battle, BattleUnit& user, std::function<double(BattleUnit&)> score) const {
+            // 如果被嘲讽，则只能攻击嘲讽者
+            for (auto& e : user.effects) {
+                if (e->type() == EffectType::Taunt) {
+                    auto& taunt = dynamic_cast<Taunt&>(*e);
+                    if (taunt.from.alive) {
+                        return taunt.from;
+                    }
+                }
+            }
             // 选择最佳目标
-            double best_score = -1;
+            double best_score = std::numeric_limits<double>::lowest();
             int best_target_hp = std::numeric_limits<int>::max();
             BattleUnit* best_target = nullptr;
             for (auto& u : battle.opponents(user)) {
@@ -92,8 +104,17 @@ namespace sr {
         BattleUnit& target_ai_spread(Battle& battle, BattleUnit& user, 
             std::function<double(BattleUnit&)> score_main,
             std::function<double(BattleUnit&)> score_side) const {
+            // 如果被嘲讽，则只能攻击嘲讽者
+            for (auto& e : user.effects) {
+                if (e->type() == EffectType::Taunt) {
+                    auto& taunt = dynamic_cast<Taunt&>(*e);
+                    if (taunt.from.alive) {
+                        return taunt.from;
+                    }
+                }
+            }
             // 选择最佳目标
-            double best_score = -1;
+            double best_score = std::numeric_limits<double>::denorm_min();
             int best_target_hp = std::numeric_limits<int>::max();
             BattleUnit* best_target = nullptr;
             for (auto& u : battle.opponents(user)) {

@@ -4,6 +4,7 @@
 #include "wind/DanHeng/DanHeng.hpp"
 #include "Fire/Himeko/Himeko.hpp"
 #include "imaginary/Welt/Welt.hpp"
+#include "Ice/March7th/March7th.hpp"
 #include <vector>
 #include <memory>
 
@@ -19,6 +20,7 @@ namespace sr {
                 emplace_back(std::make_unique<DanHeng>());
                 emplace_back(std::make_unique<Himeko>());
                 emplace_back(std::make_unique<Welt>());
+                emplace_back(std::make_unique<March7th>());
             }        
 
 

@@ -6,6 +6,7 @@
 #include "../utils/effects/Bleed.hpp"
 #include "../utils/effects/WindShear.hpp"
 #include "../utils/effects/Burn.hpp"
+#include "../utils/effects/Freeze.hpp"
 #include "../utils/effects/Slow.hpp"
 
 namespace sr {
@@ -48,11 +49,19 @@ namespace sr {
                 case Type::Imaginary:
                     // 虚数击破：造成威力50的虚数伤害，减速1点并推条3点（9命中·1回合）
                     Attack { battle, from, target, tags, 50, Type::Imaginary }.invoke();
-                    auto add_effect = AddEffect { battle, from, target, tags, std::make_unique<Slow>(1, from, 1), 9 };
-                    add_effect.invoke();
-                    if (add_effect.is_hit) {
-                        battle.speed_bar.push(target, 3);
+                    {
+                        auto add_effect = AddEffect{ battle, from, target, tags, std::make_unique<Slow>(1, from, 1), 9 };
+                        add_effect.invoke();
+                        if (add_effect.is_hit) {
+                            battle.speed_bar.push(target, 3);
+                        }
                     }
+                    break;
+                case Type::Ice:
+                    // 冰击破：造成威力100的冰伤害，附加威力100的冰冻状态（9命中·1回合）
+                    Attack { battle, from, target, tags, 100, Type::Ice }.invoke();
+                    AddEffect { battle, from, target, tags, std::make_unique<Freeze>(1, from, 100), 9 }.invoke();
+                    break;
             }
             // 触发击破时机
             battle.invoke(TriggerTime::Break, *this);

@@ -2,6 +2,7 @@
 
 #include "Procedure.hpp"
 #include "../utils/effects/WindShear.hpp"
+#include "../utils/effects/Taunt.hpp"
 
 namespace sr {
 
@@ -31,6 +32,16 @@ namespace sr {
                         if (e->type() == EffectType::WindShear) {
                             auto& target_wind_shear = dynamic_cast<WindShear&>(*e);
                             target_wind_shear.duration = std::max(target_wind_shear.duration, wind_shear.duration);
+                        }
+                    }
+                }
+                // 特殊判定：如果是嘲讽状态，且目标已经有嘲讽状态，则会移除已有的嘲讽状态
+                if (effect->type() == EffectType::Taunt) {
+                    for (auto it = target.effects.begin(); it != target.effects.end(); ) {
+                        if ((*it)->type() == EffectType::Taunt) {
+                            it = target.effects.erase(it);
+                        } else {
+                            ++it;
                         }
                     }
                 }

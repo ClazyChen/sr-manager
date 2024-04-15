@@ -19,6 +19,10 @@ namespace sr {
             return EffectType::Else;
         }
 
+        EffectAttr attr() const override {
+            return EffectAttr::Positive;
+        }
+
         std::string name() const override {
             return "穿甲提升";
         }
@@ -31,9 +35,17 @@ namespace sr {
             unit.penetration += damage;
         }
 
+        void on_remove(Battle& battle, BattleUnit& unit) {
+            unit.penetration -= damage;
+        }
+
         void on_turn_end(Battle& battle, BattleUnit& unit) {
             // 持续时间减少
             duration--;
+            // 恢复穿甲
+            if (duration == 0) {
+                unit.penetration -= damage;
+            }
         }
     };
 

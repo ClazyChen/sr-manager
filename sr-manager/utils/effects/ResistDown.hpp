@@ -20,6 +20,10 @@ namespace sr {
             return EffectType::ResistDown;
         }
 
+        EffectAttr attr() const override {
+            return EffectAttr::Negative;
+        }
+
         std::string name() const override {
             return std::format("{}抗性降低", type_name(element_type));
         }

@@ -74,6 +74,7 @@ namespace sr {
         }
 
         void take_turn_ai(Battle& battle, BattleUnit& unit) const {
+            if (unit.effects.has(EffectType::Freeze)) return;
             if (battle.skill_points(unit.side) > 0) {
                 EmitSkill { battle, unit, battle_skill.target_ai(battle, unit), 
                     unit.star >= 3 ? battle_skill_upgrade : battle_skill

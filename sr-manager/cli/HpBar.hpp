@@ -20,6 +20,18 @@ namespace sr {
             }
             return Painter::red(bar);
         }
+
+        static auto draw_shield(int hp) {
+            std::string bar = "";
+            while (hp >= HP_BAR_WIDTH) {
+                bar += "█";
+                hp -= HP_BAR_WIDTH;
+            }
+            if (hp > HP_BAR_WIDTH / 2) {
+                bar += "▌";
+            }
+            return Painter::green(bar);
+        }
     };
 
 }

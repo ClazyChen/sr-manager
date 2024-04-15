@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../battle/Battle.hpp"
+#include "../utils/effects/Shield.hpp"
 #include "HpBar.hpp"
 #include <iostream>
 #include <ranges>
@@ -39,7 +40,13 @@ namespace sr {
             }
             if (unit.alive) {
                 os << " " << HpBar::draw(unit.hp) << " ";
-                os << std::format("{}.{} / {}.0\n", unit.hp / 10, unit.hp % 10, unit.max_hp / 10);
+                int shield = shield_value(unit);
+                if (shield > 0) {
+                    os << HpBar::draw_shield(shield) << " ";
+                }
+                os << std::format("{:0.1f} / {:0.1f}{}\n", unit.hp / 10.0, unit.max_hp / 10.0,
+                    shield > 0 ? std::format(" + {:0.1f}", shield / 10.0) : ""
+                    );
             } else {
                 os << " " << Painter::red("已阵亡") << "\n";
             }

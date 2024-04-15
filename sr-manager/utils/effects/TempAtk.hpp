@@ -19,6 +19,10 @@ namespace sr {
             return EffectType::Else;
         }
 
+        EffectAttr attr() const override {
+            return EffectAttr::Positive;
+        }
+
         std::string name() const override {
             return "攻击提升";
         }
@@ -29,6 +33,10 @@ namespace sr {
 
         void on_apply(Battle& battle, BattleUnit& unit) {
             unit.attack += damage;
+        }
+
+        void on_remove(Battle& battle, BattleUnit& unit) {
+            unit.attack -= damage;
         }
 
         void on_turn_end(Battle& battle, BattleUnit& unit) {

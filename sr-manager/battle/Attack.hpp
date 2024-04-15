@@ -4,6 +4,7 @@
 #include "HpDown.hpp"
 #include "../utils/effects/AttackUpgrade.hpp"
 #include "../utils/effects/ResistDown.hpp"
+#include "../utils/effects/Shield.hpp"
 #include <map>
 
 namespace sr {
@@ -23,6 +24,7 @@ namespace sr {
         int hp_damage;           // 造成的伤害
         bool critical;           // 是否暴击
         bool penetrate;          // 是否穿甲
+        int shielded;            // 护盾抵消的伤害
 
         // 构造函数
         Attack(Battle& battle, BattleUnit& attacker, BattleUnit& defender, std::vector<Tag> tags, int damage, Type type)
@@ -74,7 +76,8 @@ namespace sr {
         static inline std::map <Tag, std::string> tag_name = {
             { Tag::Bleed, "裂伤" },
             { Tag::WindShear, "风化" },
-            { Tag::Burn, "灼烧" }
+            { Tag::Burn, "灼烧" },
+            { Tag::Freeze, "冻结" }
         };
 
         // 执行攻击
@@ -85,7 +88,7 @@ namespace sr {
             cal_effect();
             // 特殊效果的伤害显示
             std::string from = "";
-            for (auto [tag, name] : tag_name) {
+            for (auto& [tag, name] : tag_name) {
                 if (has_tag(tags, tag)) {
                     from += std::format("（{}）", name);
                 }
@@ -103,13 +106,41 @@ namespace sr {
                 ),
                 from
             ));
-            // 触发生命值下降效果
-            HpDown {
-                battle, defender, tags, hp_damage
-            }.invoke();
-            // 如果造成目标死亡，触发击杀时机
-            if (!defender.alive) {
-                battle.invoke(TriggerTime::Kill, *this);
+            // 计算护盾
+            shielded = 0;
+            for (int i = 0; i < defender.effects.size(); i++) {
+                if (defender.effects[i]->type() == EffectType::Shield) {
+                    auto& shield = dynamic_cast<Shield&>(*defender.effects[i]);
+                    if (shield.shield <= hp_damage) {
+                        // 护盾消失
+                        shielded = std::max(shielded, shield.shield);
+                        // 删除护盾效果
+                        defender.effects.erase(defender.effects.begin() + i);
+                        i--;
+                    } else {
+                        // 护盾削减
+                        shielded = std::max(shielded, hp_damage);
+                        shield.shield -= hp_damage;
+                    }
+                }
+            }
+            if (shielded > 0) {
+                battle.interface.print(std::format("【{}】的护盾抵消了 {:0.1f} 点伤害。",
+                    defender.colored_name(),
+                    shielded / 10.0
+                ));
+            }
+            // 伤害减少
+            hp_damage -= shielded;
+            if (hp_damage > 0) {
+                // 触发生命值下降效果
+                HpDown{
+                    battle, defender, tags, hp_damage
+                }.invoke();
+                // 如果造成目标死亡，触发击杀时机
+                if (!defender.alive) {
+                    battle.invoke(TriggerTime::Kill, *this);
+                }
             }
             battle.invoke(TriggerTime::AttackEnd, *this);
         }

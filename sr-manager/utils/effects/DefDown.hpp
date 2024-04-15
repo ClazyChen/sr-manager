@@ -19,6 +19,10 @@ namespace sr {
             return EffectType::Else;
         }
 
+        EffectAttr attr() const override {
+            return EffectAttr::Negative;
+        }
+
         std::string name() const override {
             return "防御下降";
         }
@@ -30,6 +34,11 @@ namespace sr {
         void on_apply(Battle& battle, BattleUnit& unit) {
             // 降低防御
             unit.defense -= value;
+        }
+
+        void on_remove(Battle& battle, BattleUnit& unit) {
+            // 恢复防御
+            unit.defense += value;
         }
 
         void on_turn_end(Battle& battle, BattleUnit& unit) {

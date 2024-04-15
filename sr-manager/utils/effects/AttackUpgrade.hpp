@@ -20,6 +20,10 @@ namespace sr {
             return EffectType::AttackUpgrade;
         }
 
+        EffectAttr attr() const override {
+            return EffectAttr::Positive;
+        }
+
         std::string name() const override {
             return std::format("{}强效", tag_name(attack_tag));
         }
