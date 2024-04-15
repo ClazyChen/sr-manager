@@ -25,26 +25,26 @@ namespace sr {
 
         // 回合开始时触发
         void on_turn_begin(Battle& battle, BattleUnit& unit) {
-            int sz = size();
-            for (int i = 0; i < sz; i++) {
+            // int sz = size();
+            for (int i = 0; i < size(); i++) {
                 (*this)[i]->on_turn_begin(battle, unit);
                 if ((*this)[i]->duration <= 0) {
                     erase(begin() + i);
                     i--;
-                    sz--;
+                    // sz--;
                 }
             }
         }
 
         // 回合结束时触发
         void on_turn_end(Battle& battle, BattleUnit& unit) {
-            int sz = size();
-            for (int i = 0; i < sz; i++) {
+            // int sz = size();
+            for (int i = 0; i < size(); i++) {
                 (*this)[i]->on_turn_end(battle, unit);
                 if ((*this)[i]->duration <= 0) {
                     erase(begin() + i);
                     i--;
-                    sz--;
+                    // sz--;
                 }
             }
         }

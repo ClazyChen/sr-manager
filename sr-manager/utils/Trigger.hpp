@@ -20,6 +20,7 @@ namespace sr {
         , AttackBegin // 攻击开始时（用于调整临时参数）
         , AttackEnd   // 攻击结束时
         , SkillBegin  // 技能开始时
+        , SkillEnd    // 技能结束时
     };
 
     // 施加在全局的触发器

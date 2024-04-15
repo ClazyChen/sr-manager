@@ -100,11 +100,11 @@ namespace sr {
                 // 全胜·安息全垒打
                 MpDown { battle, user, tags_spread(), 3 }.invoke();
                 Attack { battle, user, target, tags_spread(), damage_spread_main, Type::Physical }.invoke();
-                ReduceToughness { battle, user, target, tags_spread(), 3, Type::Physical }.invoke();
+                ReduceToughness { battle, user, target, tags_spread(), 4, Type::Physical }.invoke();
                 for (auto& u : battle.opponents(user)) {
                     if (u.get() == battle.left(target) || u.get() == battle.right(target)) {
                         Attack { battle, user, *u, tags_spread(), damage_spread_side, Type::Physical }.invoke();
-                        ReduceToughness { battle, user, *u, tags_spread(), 2, Type::Physical }.invoke();
+                        ReduceToughness { battle, user, *u, tags_spread(), 3, Type::Physical }.invoke();
                     }
                 }
             }

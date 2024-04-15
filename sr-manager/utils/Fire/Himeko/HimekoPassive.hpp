@@ -14,7 +14,7 @@
 namespace sr {
 
     // 姬子被动1 ：乘胜追击
-    // 每次击破敌人时，获得1点怒气。到达3点怒气时追加攻击，群体攻击，造成伤害。
+    // 一名敌人被击破时追加攻击，对敌方全体造成伤害。
     struct HimekoP1 : public Trigger {
         int damage = 155;
 
@@ -28,12 +28,12 @@ namespace sr {
         }
 
         std::string description() const override {
-            return std::format("一名敌人被击破时，获得1点怒气。到达3点怒气时追加攻击，对敌方全体造成威力{}的火伤害，削韧1{}。", damage
+            return std::format("一名敌人被击破时追加攻击，对敌方全体造成威力{}的火伤害，削韧1{}。", damage
             , (speed_up > 0 ? std::format("，速度提升{}点（2回合）。", speed_up) : ""));
         }
 
         std::string cli_text(Battle& battle) const override {
-            return "";
+            return speed_up > 0 ? std::format("【{}】的速度提升{}点（2回合）。\n", target.colored_name(), speed_up) : "";
         }
 
         bool is_triggrable(const Procedure& procedure) override {
@@ -45,31 +45,27 @@ namespace sr {
         void on_trigger(Procedure& procedure) override {
             Break& break_ = dynamic_cast<Break&>(procedure);
             break_.on_trigger(*this, [&]{
-                target.sp++;
-                if (target.sp == 3) {
-                    for (auto& unit : break_.battle.opponents(target)) {
-                        if (unit->alive) {
-                            Attack {
-                                break_.battle, target, *unit,
-                                { Tag::AdditionalSkill, Tag::All },
-                                damage, Type::Fire
-                            }.invoke();
-                            ReduceToughness {
-                                break_.battle, target, *unit,
-                                { Tag::AdditionalSkill, Tag::All },
-                                1, Type::Fire
-                            }.invoke();
-                        }
-                    }
-                    target.sp = 0;
-                    if (speed_up > 0) {
-                        AddEffect {
-                            break_.battle, break_.from, break_.from,
+                for (auto& unit : break_.battle.opponents(target)) {
+                    if (unit->alive) {
+                        Attack{
+                            break_.battle, target, *unit,
                             { Tag::AdditionalSkill, Tag::All },
-                            std::make_unique<Fast>(2, break_.from, speed_up),
-                            1
+                            damage, Type::Fire
+                        }.invoke();
+                        ReduceToughness{
+                            break_.battle, target, *unit,
+                            { Tag::AdditionalSkill, Tag::All },
+                            1, Type::Fire
                         }.invoke();
                     }
+                }
+                if (speed_up > 0) {
+                    AddEffect{
+                        break_.battle, break_.from, break_.from,
+                        { Tag::AdditionalSkill, Tag::All },
+                        std::make_unique<Fast>(2, break_.from, speed_up),
+                        1
+                    }.invoke();
                 }
             });
         }

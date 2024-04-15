@@ -126,7 +126,8 @@ namespace sr {
         // 触发触发器
         void invoke(TriggerTime time, Procedure& procedure) {
             for (auto& trigger : triggers) {
-                if (trigger->time == time && trigger->is_triggrable(procedure)) {
+                if (finished()) return;
+                if (trigger->time == time && trigger->target.alive && trigger->is_triggrable(procedure)) {
                     trigger->on_trigger(procedure);
                 }
             }

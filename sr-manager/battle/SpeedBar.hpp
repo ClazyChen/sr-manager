@@ -58,6 +58,20 @@ namespace sr {
             return *nodes.front().unit;
         }
 
+        // 推条
+        void push(BattleUnit& unit, float delta) {
+            auto it = std::find_if(nodes.begin(), nodes.end(), [&unit](const Node& node) {
+                return node.unit == &unit;
+                });
+            if (it == nodes.end() || it == nodes.begin()) {
+                return;
+            }
+            auto node = *it;
+            nodes.erase(it);
+            node.time_to_act += delta;
+            insert(*node.unit, node.time_to_act);
+        }
+
         // 加速或者减速
         void move(BattleUnit& unit, int cost_before, int cost_after) {
             auto it = std::find_if(nodes.begin(), nodes.end(), [&unit](const Node& node) {

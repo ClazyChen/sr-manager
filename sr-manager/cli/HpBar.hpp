@@ -6,7 +6,7 @@
 namespace sr {
 
     class HpBar {
-        static constexpr int HP_BAR_WIDTH = 20;
+        static constexpr int HP_BAR_WIDTH = 40;
 
     public:
         static auto draw(int hp) {

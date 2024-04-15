@@ -56,7 +56,7 @@ namespace sr {
     };
 
     // 姬子4星被动：投入
-    // 释放战技击破弱点时，获得1点能量
+    // 击破弱点时，获得1点能量
     struct HimekoS4 : public Trigger {
 
         // 构造函数
@@ -70,7 +70,7 @@ namespace sr {
 
         // 描述
         std::string description() const override {
-            return "释放战技击破弱点时，回复1点能量。";
+            return "击破弱点时，回复1点能量。";
         }
 
         // CLI 中显示的文本
@@ -82,8 +82,8 @@ namespace sr {
         bool is_triggrable(const Procedure& procedure) override {
             // 强制转换为 const Break& 类型
             const Break& break_ = dynamic_cast<const Break&>(procedure);
-            // 要求击破的施加者是自己，且以战技方式
-            return &break_.from == &target && has_tag(break_.tags, Tag::BattleSkill);
+            // 要求击破的施加者是自己
+            return &break_.from == &target; //&& has_tag(break_.tags, Tag::BattleSkill);
         }
 
         // 触发效果

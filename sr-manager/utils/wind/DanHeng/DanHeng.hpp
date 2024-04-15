@@ -25,7 +25,7 @@ namespace sr {
         const char* name() const { return "丹恒"; }
         Path path() const        { return Path::Hunt; }
         Type type() const        { return Type::Wind; }
-        int max_hp() const       { return 100; }
+        int max_hp() const       { return 120; }
         int max_mp() const       { return   3; }
         int origin_mp() const    { return   0; }
         int max_sp() const       { return   0; }

@@ -43,13 +43,13 @@ namespace sr {
             // 对主目标造成伤害
             Attack { battle, user, target, tags(), damage_main, Type::Physical }.invoke();
             // 削减主目标 2 点韧性
-            ReduceToughness { battle, user, target, tags(), 2, Type::Physical }.invoke();
+            ReduceToughness { battle, user, target, tags(), 3, Type::Physical }.invoke();
             // 对副目标造成伤害
             for (auto& u : battle.opponents(user)) {
                 if (u.get() == battle.left(target) || u.get() == battle.right(target)) {
                     Attack { battle, user, *u, tags(), damage_side, Type::Physical }.invoke();
                     // 削减副目标 1 点韧性
-                    ReduceToughness { battle, user, *u, tags(), 1, Type::Physical }.invoke();
+                    ReduceToughness { battle, user, *u, tags(), 2, Type::Physical }.invoke();
                 }
             }
             // 消耗 1 个战技点

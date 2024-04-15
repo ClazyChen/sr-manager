@@ -5,40 +5,42 @@
 
 namespace sr {
 
-    // 临时攻击提升效果
-    struct TempAtk : public Effect {
-        
-        BattleUnit& from;       // 施加者
-        int damage;             // 威力
+    // 防御降低效果
+    struct DefDown : public Effect {
+
+        BattleUnit& from;        // 施加者
+        int value;              // 提升值
 
         // 构造函数
-        TempAtk(int duration, BattleUnit& from, int damage)
-            : Effect(duration), from(from), damage(damage) {}
+        DefDown(int duration, BattleUnit& from, int value)
+            : Effect(duration), from(from), value(value) {}
 
         EffectType type() const override {
             return EffectType::Else;
         }
 
         std::string name() const override {
-            return "攻击提升";
+            return "防御下降";
         }
 
         std::string description() const override {
-            return std::format("攻击提升{}点。（由【{}】附加）", damage, from.colored_name());
+            return std::format("防御下降 {} 点。（由【{}】附加）", value, from.colored_name());
         }
 
         void on_apply(Battle& battle, BattleUnit& unit) {
-            unit.attack += damage;
+            // 降低防御
+            unit.defense -= value;
         }
 
         void on_turn_end(Battle& battle, BattleUnit& unit) {
             // 持续时间减少
             duration--;
-            // 恢复攻击
+            // 恢复防御
             if (duration <= 0) {
-                unit.attack -= damage;
+                unit.defense += value;
             }
         }
+
     };
 
 }

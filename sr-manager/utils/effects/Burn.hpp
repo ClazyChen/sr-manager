@@ -17,7 +17,7 @@ namespace sr {
             : Effect(duration), from(from), damage(damage) {}
 
         EffectType type() const override {
-            return EffectType::Bleed;
+            return EffectType::Burn;
         }
 
         std::string name() const override {

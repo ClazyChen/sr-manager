@@ -14,7 +14,7 @@ namespace sr {
         // 构造函数
         Game(Battle& battle) : battle(battle) {}
 
-        void run() {
+        Winner run() {
             // 初始化触发器（装载被动技能）
             battle.add_triggers();
             // 游戏开始时（触发一些被动技能）
@@ -40,6 +40,8 @@ namespace sr {
                 // 更新速度条
                 battle.speed_bar.update();
             }
+            // 返回胜利方
+            return battle.winner;
         }
     };
 }

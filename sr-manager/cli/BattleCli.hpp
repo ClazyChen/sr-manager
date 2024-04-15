@@ -23,6 +23,13 @@ namespace sr {
     public:
         std::ostream& os;
         BattleCli(std::ostream& os = std::cout) : os(os) {}
+
+        void hide_all() {
+            print_battle_field = false;
+            print_procedure = false;
+            print_speed_bar = false;
+            wait_every_step = false;
+        }
         // 打印一个战场单位的信息
         void battle_unit(const BattleUnit& unit) const {
             if (unit.side == Side::Blue) {

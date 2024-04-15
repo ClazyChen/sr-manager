@@ -2,6 +2,7 @@
 
 #include "Procedure.hpp"
 #include "HpDown.hpp"
+#include "../utils/effects/AttackUpgrade.hpp"
 #include "../utils/effects/ResistDown.hpp"
 #include <map>
 
@@ -28,6 +29,14 @@ namespace sr {
             : Procedure(battle, tags), attacker(attacker), defender(defender), damage(damage), type(type) {
                 critical_rate = attacker.critical;
                 penetration_rate = attacker.penetration;
+                for (auto& effect : attacker.effects) {
+                    if (effect->type() == EffectType::AttackUpgrade) {
+                        auto& attack_upgrade = dynamic_cast<AttackUpgrade&>(*effect);
+                        if (has_tag(tags, attack_upgrade.attack_tag)) {
+                            damage += attack_upgrade.damage;
+                        }
+                    }
+                }
             }
 
     private:    
@@ -38,7 +47,7 @@ namespace sr {
             // 判断是否穿甲
             penetrate = Random::dice(penetration_rate);
             // 基础伤害 = 实际攻击 - 防御 * 10 *（穿甲 ? 0 : 1）
-            auto base_damage = attack - defender.defense * 10 * (penetrate ? 0 : 1);
+            auto base_damage = attack - std::max(0, defender.defense) * 10 * (penetrate ? 0 : 1);
             base_damage = std::max(base_damage, 1);
             // 元素伤害抗性影响
             for (auto& effect : defender.effects) {

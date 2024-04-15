@@ -29,12 +29,36 @@ namespace sr {
         // 伤害类型
         , Break // 击破伤害
         , DamageOverTime // 持续伤害
+        , Extra // 附加伤害
         , Bleed // 裂伤
-        , Burn // 灼伤
-        , Shock // 电伤
-        , WindShear // 风伤
+        , Burn // 灼烧
+        , Shock // 触电
+        , WindShear // 风化
         
     };
+
+    // 标签的名称
+    const char* tag_name(Tag tag) {
+        switch (tag) {
+            case Tag::NormalAttack: return "普攻";
+            case Tag::BattleSkill: return "战技";
+            case Tag::PassiveSkill: return "被动";
+            case Tag::UltimateSkill: return "终结技";
+            case Tag::AdditionalSkill: return "追加攻击";
+            case Tag::Single: return "单体";
+            case Tag::Spread: return "扩散";
+            case Tag::Random: return "随机";
+            case Tag::All: return "全体";
+            case Tag::Break: return "击破";
+            case Tag::DamageOverTime: return "持续伤害";
+            case Tag::Extra: return "附加伤害";
+            case Tag::Bleed: return "裂伤";
+            case Tag::Burn: return "灼烧";
+            case Tag::Shock: return "触电";
+            case Tag::WindShear: return "风化";
+        }
+        return "未知";
+    }
 
     bool has_tag(const std::vector<Tag>& tags, Tag tag) {
         return std::find(tags.begin(), tags.end(), tag) != tags.end();

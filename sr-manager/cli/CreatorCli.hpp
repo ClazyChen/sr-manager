@@ -20,7 +20,28 @@ namespace sr {
         Battle battle;
         Game game;
 
+        // 用户输入的序号和星级缓存，用于重复进行
+        std::vector<std::pair<int, int>> data_temp;
+
         CreatorCli() : battle(battle_cli), game(battle) {}
+
+        void initialize(CreatorCli& creator) {
+            creator.max_unit = max_unit;
+            for (int i = 0; i < max_unit; i++) {
+                auto& [index, star] = data_temp[i];
+                auto unit = std::make_unique<BattleUnit>(data[index]);
+                unit->debut(Side::Blue, creator.battle.blue.size(), star);
+                data[index].add_star(creator.battle, *unit, star);
+                creator.battle.blue.push_back(std::move(unit));
+            }
+            for (int i = 0; i < max_unit; i++) {
+                auto& [index, star] = data_temp[i + max_unit];
+                auto unit = std::make_unique<BattleUnit>(data[index]);
+                unit->debut(Side::Red, creator.battle.red.size(), star);
+                data[index].add_star(creator.battle, *unit, star);
+                creator.battle.red.push_back(std::move(unit));
+            }
+        }
 
         void select_character(std::vector<std::unique_ptr<BattleUnit>>& vec, Side side) {
             int index, star;
@@ -44,6 +65,7 @@ namespace sr {
             unit->debut(side, vec.size(), star);
             data[index].add_star(battle, *unit, star);
             vec.push_back(std::move(unit));
+            data_temp.push_back({index, star});
         }
 
         void run() {
@@ -58,7 +80,32 @@ namespace sr {
             for (int i = 0; i < max_unit; i++) {
                 select_character(battle.red, Side::Red);
             }
-            game.run();
+            std::cout << "模拟模式选择：" << std::endl;
+            std::cout << "(0) 单次模拟，观看战斗过程" << std::endl;
+            std::cout << "(N) N次模拟，观看胜率" << std::endl;
+            int mode;
+            std::cin >> mode;
+            if (mode == 0) {
+                game.run();
+            }
+            else {
+                int blue_win = 0;
+                int red_win = 0;
+                for (int i = 0; i < mode; i++) {
+                    CreatorCli creator;
+                    initialize(creator);
+                    creator.battle_cli.hide_all();
+                    auto winner = creator.game.run();
+                    if (winner == Winner::Blue) {
+                        blue_win++;
+                    }
+                    else {
+                        red_win++;
+                    }
+                }
+                std::cout << std::format("蓝方获胜：{}次（{:0.1f}%）\n红方获胜：{}次（{:0.1f}%）", blue_win, blue_win * 100.0 / mode, red_win, red_win * 100.0 / mode) << std::endl;
+            }
+            
         }
 
     };

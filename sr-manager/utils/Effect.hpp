@@ -19,6 +19,7 @@ namespace sr {
         , Slow        // 减速
         , Fast        // 加速
         , ResistDown  // 抗性降低
+        , AttackUpgrade // 攻击强效
 
         , Else        // 其他
     };

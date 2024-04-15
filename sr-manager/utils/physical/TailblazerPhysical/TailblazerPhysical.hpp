@@ -27,7 +27,7 @@ namespace sr {
         const char* name() const { return "开拓者·物理"; }
         Path path() const        { return Path::Destruction; }
         Type type() const        { return Type::Physical; }
-        int max_hp() const       { return 125; }
+        int max_hp() const       { return 175; }
         int max_mp() const       { return   3; }
         int origin_mp() const    { return   1; }
         int max_sp() const       { return   0; }

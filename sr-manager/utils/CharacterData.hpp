@@ -3,6 +3,7 @@
 #include "physical/TailblazerPhysical/TailblazerPhysical.hpp"
 #include "wind/DanHeng/DanHeng.hpp"
 #include "Fire/Himeko/Himeko.hpp"
+#include "imaginary/Welt/Welt.hpp"
 #include <vector>
 #include <memory>
 
@@ -17,7 +18,7 @@ namespace sr {
                 emplace_back(std::make_unique<TailblazerPhysical>());
                 emplace_back(std::make_unique<DanHeng>());
                 emplace_back(std::make_unique<Himeko>());
-
+                emplace_back(std::make_unique<Welt>());
             }        
 
 

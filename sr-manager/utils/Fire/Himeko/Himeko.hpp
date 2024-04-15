@@ -23,11 +23,11 @@ namespace sr {
         const char* name() const { return "姬子"; }
         Path path() const        { return Path::Erudition; }
         Type type() const        { return Type::Fire; }
-        int max_hp() const       { return 110; }
+        int max_hp() const       { return 160; }
         int max_mp() const       { return   3; }
         int origin_mp() const    { return   0; }
-        int max_sp() const       { return   3; }
-        int origin_sp() const    { return   1; }
+        int max_sp() const       { return   0; }
+        int origin_sp() const    { return   0; }
         int attack() const       { return  14; }
         int defense() const      { return   4; }
         int speed() const        { return   9; }

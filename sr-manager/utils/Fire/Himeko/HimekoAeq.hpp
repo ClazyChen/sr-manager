@@ -38,7 +38,7 @@ namespace sr {
             // 对目标造成伤害
             Attack { battle, user, target, tags(), damage, Type::Fire }.invoke();
             // 削减目标 2 点韧性
-            ReduceToughness { battle, user, target, tags(), 2, Type::Wind }.invoke();
+            ReduceToughness { battle, user, target, tags(), 2, Type::Fire }.invoke();
             // 获得 1 个战技点
             GetSkillPoint { battle, user, tags(), 1 }.invoke();
             // 回复 1 点能量
@@ -99,7 +99,7 @@ namespace sr {
                 Attack { battle, user, target, tags(), damage_main, Type::Fire }.invoke();
             }
             // 削减主目标韧性
-            ReduceToughness { battle, user, target, tags(), 2, Type::Fire }.invoke();
+            ReduceToughness { battle, user, target, tags(), 3, Type::Fire }.invoke();
             // 对副目标造成伤害
             for (auto& u : battle.opponents(user)) {
                 if (u.get() == battle.left(target) || u.get() == battle.right(target)) {
@@ -109,7 +109,7 @@ namespace sr {
                         Attack { battle, user, *u, tags(), damage_side, Type::Fire }.invoke();
                     }
                     // 削减副目标韧性
-                    ReduceToughness { battle, user, *u, tags(), 1, Type::Fire }.invoke();
+                    ReduceToughness { battle, user, *u, tags(), 2, Type::Fire }.invoke();
                 }
             }
             // 消耗 1 个战技点
@@ -159,21 +159,26 @@ namespace sr {
             MpDown { battle, user, tags(), 3 }.invoke();
             // 对目标造成伤害
             for (auto& u : battle.opponents(user)) {
+                if (!u->alive) continue;
                 Attack { battle, user, *u, tags(), damage, Type::Fire }.invoke();
                 // 削减目标 2 点韧性
-                ReduceToughness { battle, user, *u, tags(), 2, Type::Fire }.invoke();
+                ReduceToughness { battle, user, *u, tags(), 4, Type::Fire }.invoke();
             }
             if (extra_damage == 0) {
                 return;
             }
             // 随机目标的额外伤害
             for (int i = 0; i < 2; i++) {
+                // 如果游戏已经结束，不再继续
+                if (battle.finished()) {
+                    return;
+                }
                 // 随机选择目标
                 auto& target = battle.random_target(battle.opponents(user));
                 // 对目标造成伤害
                 Attack { battle, user, *target, tags(), extra_damage, Type::Fire }.invoke();
                 // 削减目标 1 点韧性
-                ReduceToughness { battle, user, *target, tags(), 1, Type::Fire }.invoke();
+                ReduceToughness { battle, user, *target, tags(), 2, Type::Fire }.invoke();
             }
         }
 
