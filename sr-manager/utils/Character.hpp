@@ -29,7 +29,7 @@ namespace sr {
         , Imaginary  // 虚数
     };
 
-    std::string type_name(Type type) {
+    inline std::string type_name(Type type) {
         switch (type) {
         case Type::Physical: return "物理";
         case Type::Fire: return "火";

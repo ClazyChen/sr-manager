@@ -8,6 +8,7 @@
 #include "../utils/effects/Burn.hpp"
 #include "../utils/effects/Freeze.hpp"
 #include "../utils/effects/Slow.hpp"
+#include "../utils/effects/Shock.hpp"
 
 namespace sr {
 
@@ -61,6 +62,11 @@ namespace sr {
                     // 冰击破：造成威力100的冰伤害，附加威力100的冰冻状态（9命中·1回合）
                     Attack { battle, from, target, tags, 100, Type::Ice }.invoke();
                     AddEffect { battle, from, target, tags, std::make_unique<Freeze>(1, from, 100), 9 }.invoke();
+                    break;
+                case Type::Lightning:
+                    // 雷击破：造成威力100的雷伤害，附加威力175的触电状态（9命中·3回合）
+                    Attack{ battle, from, target, tags, 100, Type::Lightning }.invoke();
+                    AddEffect{ battle, from, target, tags, std::make_unique<Shock>(3, from, 175), 9 }.invoke();
                     break;
             }
             // 触发击破时机

@@ -3,6 +3,7 @@
 #include "Battle.hpp"
 #include "GameStart.hpp"
 #include "TurnBegin.hpp"
+#include "TurnEnd.hpp"
 #include "../utils/TriggerList.hpp"
 
 namespace sr {
@@ -15,6 +16,16 @@ namespace sr {
         Game(Battle& battle) : battle(battle) {}
 
         Winner run() {
+            // 每增加1个角色，所有角色增加生命
+            int hp = battle.blue.size() * 500;
+            for (auto& unit : battle.blue) {
+                unit->hp += hp;
+                unit->max_hp += hp;
+            }
+            for (auto& unit : battle.red) {
+                unit->hp += hp;
+                unit->max_hp += hp;
+            }
             // 初始化触发器（装载被动技能）
             battle.add_triggers();
             // 游戏开始时（触发一些被动技能）
@@ -34,9 +45,13 @@ namespace sr {
                 battle.interface.wait();
                 // 进行回合
                 TurnBegin { battle, battle.speed_bar.current() }.invoke();
+                if (battle.finished()) break;
                 battle.speed_bar.current().take_turn(battle);
+                if (battle.finished()) break;
+                TurnEnd{ battle, battle.speed_bar.current() }.invoke();
+                if (battle.finished()) break;
                 // 插入回合（终结技）
-                while (battle.insert_turn()) { }
+                while (battle.insert_turn() && !battle.finished()) { }
                 // 更新速度条
                 battle.speed_bar.update();
             }

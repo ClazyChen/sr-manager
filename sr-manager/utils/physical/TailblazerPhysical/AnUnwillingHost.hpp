@@ -9,7 +9,7 @@ namespace sr {
     // 开拓者（物理）的被动：因缘假合的人身（2星）
     struct AnUnwillingHost : public Trigger {
         
-        int hp_up = 5;  // 回复的生命值
+        int hp_up = 10;  // 回复的生命值
 
         // 构造函数
         AnUnwillingHost(BattleUnit& target)

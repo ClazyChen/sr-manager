@@ -77,7 +77,8 @@ namespace sr {
             { Tag::Bleed, "裂伤" },
             { Tag::WindShear, "风化" },
             { Tag::Burn, "灼烧" },
-            { Tag::Freeze, "冻结" }
+            { Tag::Freeze, "冻结" },
+            { Tag::Shock, "触电" }
         };
 
         // 执行攻击

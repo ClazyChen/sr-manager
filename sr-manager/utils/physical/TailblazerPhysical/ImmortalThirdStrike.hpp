@@ -7,7 +7,7 @@ namespace sr {
 
     // 开拓者（物理）的被动：不灭三振
     struct ImmortalThirdStrike : public Trigger {
-        int max_hp_up = 15;        // 最大生命值提升
+        int max_hp_up = 30;        // 最大生命值提升
 
         // 构造函数
         ImmortalThirdStrike(BattleUnit& owner) :

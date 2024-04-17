@@ -40,7 +40,7 @@ namespace sr {
     };
 
     // 标签的名称
-    const char* tag_name(Tag tag) {
+    inline const char* tag_name(Tag tag) {
         switch (tag) {
             case Tag::NormalAttack: return "普攻";
             case Tag::BattleSkill: return "战技";

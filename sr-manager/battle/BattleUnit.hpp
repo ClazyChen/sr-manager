@@ -66,7 +66,7 @@ namespace sr {
             effects.clear();
         }
         int time_cost() const {
-            return SPEED_LIMIT - speed;
+            return std::max(2, SPEED_LIMIT - speed);
         }
         int ultimate_skill_priority() const {
             return character.ultimate_skill_priority();
@@ -97,15 +97,7 @@ namespace sr {
         BattleUnit* summoner = nullptr;
 
         // 每个回合的行动 AI
-        void take_turn(Battle& battle) {
-            // 如果韧性为 0，恢复韧性
-            if (toughness == 0) {
-                toughness = max_toughness;
-            }
-            effects.on_turn_begin(battle, *this);
-            character.take_turn_ai(battle, *this);
-            effects.on_turn_end(battle, *this);
-        }
+        void take_turn(Battle& battle);
 
         // 带颜色的名字
         std::string colored_name() const {

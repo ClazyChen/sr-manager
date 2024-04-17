@@ -22,11 +22,12 @@ namespace sr {
         , AttackUpgrade // 攻击强效
         , Taunt       // 嘲讽
         , Shield      // 护盾
+        , Unyielding  // 不屈
 
         , Else        // 其他
     };
 
-    std::string type_name(EffectType type) {
+    inline std::string type_name(EffectType type) {
         switch (type) {
         case EffectType::Bleed: return "裂伤";
         case EffectType::WindShear: return "风化";
@@ -41,6 +42,7 @@ namespace sr {
         case EffectType::AttackUpgrade: return "攻击强效";
         case EffectType::Taunt: return "嘲讽";
         case EffectType::Shield: return "护盾";
+        case EffectType::Unyielding: return "不屈";
         case EffectType::Else: return "其他";
         default: return "未知";
         }
@@ -48,7 +50,7 @@ namespace sr {
 
     // 持续效果性质
     enum class EffectAttr {
-          Positive    // 正面效果
+        Positive    // 正面效果
         , Negative    // 负面效果
         , Neutral     // 中性效果
     };

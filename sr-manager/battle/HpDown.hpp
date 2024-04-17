@@ -9,6 +9,7 @@ namespace sr {
     struct HpDown : public Procedure {
         BattleUnit& target;      // 目标
         int damage;              // 生命值下降的数值
+        int hp_before_down;      // 下降前的生命值
 
         // 构造函数
         HpDown(Battle& battle, BattleUnit& target, std::vector<Tag> tags, int damage)
@@ -17,6 +18,7 @@ namespace sr {
         // 执行生命值下降的效果
         void apply() override {
             if (!target.alive) return;
+            hp_before_down = target.hp;
             target.hp -= damage;
             battle.interface.print(std::format("【{}】生命值下降 {:0.1f} 点，剩余生命值 {:0.1f} 。"
                 , target.colored_name(), damage / 10.0, target.hp / 10.0
@@ -27,6 +29,7 @@ namespace sr {
                     battle, target, tags
                 }.invoke();
             }
+            battle.invoke(TriggerTime::HpDownEnd, *this);
         }
 
     };

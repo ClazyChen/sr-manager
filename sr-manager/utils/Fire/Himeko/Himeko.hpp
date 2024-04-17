@@ -80,7 +80,7 @@ namespace sr {
                     unit.star >= 3 ? battle_skill_upgrade : battle_skill
                 }.invoke();
             } else {
-                EmitSkill { battle, unit, battle_skill.target_ai(battle, unit), normal_attack }.invoke();
+                EmitSkill { battle, unit, normal_attack.target_ai(battle, unit), normal_attack }.invoke();
             }
         }
 

@@ -22,7 +22,7 @@ namespace sr {
         void apply() override {
             if (!target.alive) return;
             auto actual_hit_rate = hit_rate + from.hit - target.resist;
-            is_hit = Random::dice(actual_hit_rate);
+            is_hit = actual_hit_rate <= 0 ? false : Random::dice(actual_hit_rate);
             auto name = effect->colored_name();
             if (is_hit) {
                 // 特殊判定：如果是风化状态，且目标已经有风化状态，会刷新已有状态的持续时间

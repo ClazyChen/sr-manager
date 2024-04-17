@@ -21,6 +21,7 @@ namespace sr {
             target.toughness = 0;
             battle.interface.print(std::format("【{}】进入无法战斗状态。", target.colored_name()));
             battle.judge_success();
+            battle.invoke(TriggerTime::Die, *this);
             // 从速度条中移除
             battle.speed_bar.remove(target);
         }

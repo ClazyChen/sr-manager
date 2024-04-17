@@ -14,13 +14,16 @@ namespace sr {
     enum class TriggerTime {
           GameStart // 游戏开始时
         , TurnBegin // 回合开始时
+        , TurnEnd   // 回合结束时
         , Break     // 击破时
         , Kill      // 击杀时
+        , Die       // 死亡时
 
         , AttackBegin // 攻击开始时（用于调整临时参数）
         , AttackEnd   // 攻击结束时
         , SkillBegin  // 技能开始时
         , SkillEnd    // 技能结束时
+        , HpDownEnd   // 生命值减少结束时
     };
 
     // 施加在全局的触发器
