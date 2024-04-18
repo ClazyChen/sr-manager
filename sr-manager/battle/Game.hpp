@@ -17,7 +17,7 @@ namespace sr {
 
         Winner run() {
             // 每增加1个角色，所有角色增加生命
-            int hp = battle.blue.size() * 500;
+            int hp = (battle.blue.size() - 1) * 500;
             for (auto& unit : battle.blue) {
                 unit->hp += hp;
                 unit->max_hp += hp;

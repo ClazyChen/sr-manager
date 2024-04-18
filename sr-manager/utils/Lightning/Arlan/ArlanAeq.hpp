@@ -140,7 +140,7 @@ namespace sr {
             ReduceToughness{ battle, user, target, tags(), 4, Type::Lightning }.invoke();
             for (auto& u : battle.opponents(user)) {
                 if (u.get() == battle.left(target) || u.get() == battle.right(target)) {
-                    Attack{ battle, user, target, tags(), _damage_side(user), Type::Lightning}.invoke();
+                    Attack{ battle, user, *u, tags(), _damage_side(user), Type::Lightning}.invoke();
                     // 削减副目标韧性
                     ReduceToughness{ battle, user, *u, tags(), 2, Type::Lightning }.invoke();
                 }

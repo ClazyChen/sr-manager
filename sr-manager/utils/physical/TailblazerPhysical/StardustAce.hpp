@@ -12,7 +12,7 @@ namespace sr {
     // 开拓者（物理）的终结技能：星尘王牌
     class StardustAce : public Skill {
     public:
-        int damage_single = 335;
+        int damage_single = 390;
         int damage_spread_main = 290;
         int damage_spread_side = 150;
 

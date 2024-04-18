@@ -13,8 +13,8 @@ namespace sr {
     // 丹恒的终结技：洞天幻化·长梦一觉
     class EtherealDream : public Skill {
     public:
-        int damage = 300;
-        int slow_extra_damage = 80;
+        int damage = 350;
+        int slow_extra_damage = 100;
 
         const char* name() const { return "洞天幻化·长梦一觉"; }
         std::string description() const { return std::format(

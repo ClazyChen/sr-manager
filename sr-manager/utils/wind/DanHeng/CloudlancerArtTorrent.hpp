@@ -15,7 +15,7 @@ namespace sr {
     // 丹恒的战技：云骑枪术·疾雨
     class CloudlancerArtTorrent : public Skill {
     public:
-        int damage = 235;
+        int damage = 260;
         int slow = 1;
         int slow_hit_rate = 3;
         int slow_duration = 2;

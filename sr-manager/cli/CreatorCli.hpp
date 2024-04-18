@@ -43,29 +43,31 @@ namespace sr {
             }
         }
 
-        void select_character(std::vector<std::unique_ptr<BattleUnit>>& vec, Side side) {
+        void select_character(std::vector<std::unique_ptr<BattleUnit>>& vec, Side side, int max_unit) {
             int index, star;
             for (auto i = 0; i < data.size(); i++) {
                 std::cout << Painter::white(std::format("({}) {}", i, data[i].name())) << std::endl;
             }
-            while (true) {
-                std::cin >> index >> star;
-                if (index < 0 || index >= data.size()) {
-                    std::cout << "输入序号不合法，请重新输入" << std::endl;
-                    continue;
+            for (int i = 0; i < max_unit; i++) {
+                while (true) {
+                    std::cin >> index >> star;
+                    if (index < 0 || index >= data.size()) {
+                        std::cout << "输入序号不合法，请重新输入" << std::endl;
+                        continue;
+                    }
+                    if (star < 0 || star > 6) {
+                        std::cout << "输入星级不合法，请重新输入" << std::endl;
+                        continue;
+                    }
+                    break;
                 }
-                if (star < 0 || star > 6) {
-                    std::cout << "输入星级不合法，请重新输入" << std::endl;
-                    continue;
-                }
-                break;
+                std::cout << Painter::yellow(std::format("{}（{}★）已被选择", data[index].name(), star)) << std::endl;
+                auto unit = std::make_unique<BattleUnit>(data[index]);
+                unit->debut(side, vec.size(), star);
+                data[index].add_star(battle, *unit, star);
+                vec.push_back(std::move(unit));
+                data_temp.push_back({ index, star });
             }
-            std::cout << Painter::yellow(std::format("{}（{}★）已被选择", data[index].name(), star)) << std::endl;
-            auto unit = std::make_unique<BattleUnit>(data[index]);
-            unit->debut(side, vec.size(), star);
-            data[index].add_star(battle, *unit, star);
-            vec.push_back(std::move(unit));
-            data_temp.push_back({index, star});
         }
 
         void run() {
@@ -73,13 +75,9 @@ namespace sr {
             std::cout << "输入最大单位数：";
             std::cin >> max_unit;
             std::cout << "蓝方角色选择（输入序号 星级）：" << std::endl;
-            for (int i = 0; i < max_unit; i++) {
-                select_character(battle.blue, Side::Blue);
-            }
+            select_character(battle.blue, Side::Blue, max_unit);
             std::cout << "红方角色选择（输入序号 星级）：" << std::endl;
-            for (int i = 0; i < max_unit; i++) {
-                select_character(battle.red, Side::Red);
-            }
+            select_character(battle.red, Side::Red, max_unit);
             std::cout << "模拟模式选择：" << std::endl;
             std::cout << "(0) 单次模拟，观看战斗过程" << std::endl;
             std::cout << "(N) N次模拟，观看胜率" << std::endl;
