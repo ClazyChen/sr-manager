@@ -1,0 +1,165 @@
+profile:
+  id: TrailblazerPhysical
+  name: 开拓者·物理
+  type: physical
+  path: destruction
+  health: 175
+  energy: 1/3
+  attack: 11
+  defense: 6
+  speed: 10
+  hit: 0
+  resist: 0
+  critical: 0
+  penetration: 0
+normal_attack:
+  target: single_enemy
+  effect:
+    - type: attack (SELF->TARGET)
+      value: {normal_attack_power} [{normal_attack_power_delta}]
+    - type: reduce_toughness (SELF->TARGET)
+      value: {normal_attack_reduce_toughness} [{normal_attack_reduce_toughness_delta}]
+    - type: get_skill_point (SELF)
+      value: {normal_attack_get_skill_point}
+    - type: get_energy (SELF)
+      value: {normal_attack_get_energy}
+  name: 再见安打
+  description: 对(target)造成(x1)威力的(.type)伤害，削韧(x2)。
+battle_skill:
+  target: spread_enemy
+  effect:
+    - type: attack (SELF->TARGET_MAIN)
+      value: 150 [{battle_skill_power_delta_spread_main}]
+    - type: reduce_toughness (SELF->TARGET_MAIN)
+      value: {battle_skill_reduce_toughness} [{battle_skill_reduce_toughness_delta}]
+    - type: attack (SELF->TARGET_SIDE)
+      value: 120 [{battle_skill_power_delta_spread_side}]
+    - type: reduce_toughness (SELF->TARGET_SIDE)
+      value: {battle_skill_reduce_toughness_side} [{battle_skill_reduce_toughness_delta}]
+    - type: cost_skill_point (SELF)
+      value: {battle_skill_cost_skill_point}
+    - type: get_energy (SELF)
+      value: {battle_skill_get_energy}
+  name: 安息全垒打
+  description: 对(target)造成(x1)（副目标(x3)）威力的(.type)伤害，削韧(x2)（副目标(x4)）。
+ultimate_skill:
+  - target: single_enemy
+    effect:
+      - type: cost_energy (SELF)
+        value: (.energy_max)
+      - type: attack (SELF->TARGET)
+        value: 390 [{ultimate_skill_power_delta_single}]
+      - type: reduce_toughness (SELF->TARGET)
+        value: {ultimate_skill_reduce_toughness} [{ultimate_skill_reduce_toughness_delta}]
+    condition:
+      - (.energy) ge (x1)
+    name: 全胜·再见安打
+    description: 消耗(x1)点能量，对(target)造成(x2)威力的(.type)伤害，削韧(x3)。
+  - target: spread_enemy
+    effect:
+      - type: cost_energy (SELF)
+        value: (.energy_max)
+      - type: attack (SELF->TARGET_MAIN)
+        value: 290 [{ultimate_skill_power_delta_spread_main}]
+      - type: reduce_toughness (SELF->TARGET_MAIN)
+        value: {ultimate_skill_reduce_toughness} [{ultimate_skill_reduce_toughness_delta}]
+      - type: attack (SELF->TARGET_SIDE)
+        value: 150 [{ultimate_skill_power_delta_spread_side}]
+      - type: reduce_toughness (SELF->TARGET_SIDE)
+        value: {ultimate_skill_reduce_toughness_side} [{ultimate_skill_reduce_toughness_delta}]
+    condition:
+      - (.energy) greater_eq (x1)
+    name: 全胜·安息全垒打
+    description: 消耗(x1)点能量，对(target)造成(x2)（副目标(x4)）威力的(.type)伤害，削韧(x3)（副目标(x5)）。
+talent:
+  target: self
+  variables:
+    - value: 0 
+    - value: 2 [1]
+  effect:
+    - type: delta.attack (SELF)
+      value: 2 [1]
+    - type: delta.defense (SELF)
+      value: 1 [1]
+    - type: delta.<r1> (SELF)
+      value: 1
+  time: break
+  condition:
+    - (@from) eq SELF
+    - (r1) less (r2)
+  name: 牵制盗垒
+  description: （可用次数(r1)/(r2)）(time)，(target)攻击提高(x1)点，防御提高(x2)点。
+passive_skill:
+  target: all_team
+  effect:
+    - type: delta.health_max (SELF->TARGET)
+      value: 30 [15]
+  time: start
+  name: 不灭三振
+  description: (time)，(all_team)生命上限提高(x1)点。
+stars:
+  - star: 1
+    target: self
+    effect:
+      - type: get_energy (SELF)
+        value: 1
+    time: kill
+    condition:
+      - (@from) eq SELF
+    name: 坠临万界的星芒
+    description: (target)(time)，获得(x1)点能量。
+  - star: 2
+    target: self
+    effect:
+      - type: cure (SELF)
+        value: 15
+    time: turn_begin
+    condition:
+      - (@from) eq SELF
+    name: 因缘假合的人身
+    description: (target)(time)，回复(x1)点生命。
+  - star: 3
+    target: self
+    effect:
+      - type: delta.battle_skill.x1 (SELF)
+        value: {battle_skill_power_delta_spread_main}
+      - type: delta.battle_skill.x3 (SELF)
+        value: {battle_skill_power_delta_spread_side}
+    time: before_start
+    name: 揭示前路的言灵
+    description: (.battle_skill)威力提高(x1)（副目标(x2)）。
+  - star: 4
+    target: self
+    effect:
+      - type: delta.critical (SELF)
+        value: 2
+    time: emit_skill
+    condition:
+      - (@from) eq SELF
+      - (@value) eq (.talent)
+    name: 凝眸毁灭的瞬间
+    description: (.talent)(target)，暴击提高(x1)点。
+  - star: 5
+    target: self
+    effect:
+      - type: delta.ultimate_skill_1.x2 (SELF)
+        value: {ultimate_skill_power_delta_single}
+      - type: delta.ultimate_skill_2.x2 (SELF)
+        value: {ultimate_skill_power_delta_spread_main}
+      - type: delta.ultimate_skill_2.x4 (SELF)
+        value: {ultimate_skill_power_delta_spread_side}
+    time: before_start
+    name: 劫余重生的希望
+    description: (.ultimate_skill_1)威力提高(x1)；(.ultimate_skill_2)威力提高(x2)（副目标(x3)）。
+  - star: 6
+    target: self
+    effect:
+      - type: invoke_skill (SELF)
+        value: (.talent)
+      - type: delta.talent.r1 (SELF)
+        value: -1
+    time: kill
+    condition:
+      - (@from) eq SELF
+    name: 拓宇行天的意志
+    description: (target)(time)，触发(talent)。（不计入次数）

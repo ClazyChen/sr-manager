@@ -1,0 +1,23 @@
+variables:
+  normal_attack_power: 100 # 默认普通攻击威力
+  normal_attack_reduce_toughness: 2 # 默认普通攻击减少韧性值
+  normal_attack_power_delta: 50 # 强化普通攻击时的威力增量
+  normal_attack_reduce_toughness_delta: 1 # 强化普通攻击时的减少韧性值增量
+  normal_attack_get_skill_point: 1 # 默认普通攻击获得技能点数
+  normal_attack_get_energy: 1 # 默认普通攻击获得能量数
+  battle_skill_reduce_toughness: 3 # 默认战斗技能减少韧性值
+  battle_skill_reduce_toughness_side: 2 # 默认战斗技能减少韧性值（副目标）
+  battle_skill_reduce_toughness_delta: 1 # 强化战斗技能时的减少韧性值增量
+  battle_skill_power_delta_single: 40 # 强化单体攻击的战斗技能威力增量
+  battle_skill_power_delta_spread_main: 30 # 强化扩散攻击的战斗技能威力增量（主目标）
+  battle_skill_power_delta_spread_side: 20 # 强化扩散攻击的战斗技能威力增量（副目标）
+  battle_skill_power_delta_all: 20 # 强化全体攻击的战斗技能威力增量
+  battle_skill_cost_skill_point: 1 # 默认战斗技能消耗技能点数
+  battle_skill_get_energy: 1 # 默认战斗技能获得能量数
+  ultimate_skill_reduce_toughness: 4 # 默认终极技能减少韧性值
+  ultimate_skill_reduce_toughness_side: 3 # 默认终极技能减少韧性值（副目标）
+  ultimate_skill_reduce_toughness_delta: 1 # 强化终极技能时的减少韧性值增量
+  ultimate_skill_power_delta_single: 50 # 强化单体攻击的终极技能威力增量
+  ultimate_skill_power_delta_spread_main: 40 # 强化扩散攻击的终极技能威力增量（主目标）
+  ultimate_skill_power_delta_spread_side: 25 # 强化扩散攻击的终极技能威力增量（副目标）
+  ultimate_skill_power_delta_all: 25 # 强化全体攻击的终极技能威力增量

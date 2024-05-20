@@ -3,11 +3,12 @@
 #include "physical/TailblazerPhysical/TailblazerPhysical.hpp"
 #include "wind/DanHeng/DanHeng.hpp"
 #include "Fire/Himeko/Himeko.hpp"
+#include "Fire/Asta/Asta.hpp"
+#include "Fire/TailblazerFire/TailblazerFire.hpp"
 #include "imaginary/Welt/Welt.hpp"
 #include "Ice/March7th/March7th.hpp"
 #include "Ice/Herta/Herta.hpp"
 #include "Lightning/Arlan/Arlan.hpp"
-#include "Fire/Asta/Asta.hpp"
 #include <vector>
 #include <memory>
 
@@ -27,6 +28,7 @@ namespace sr {
                 emplace_back(std::make_unique<Herta>());
                 emplace_back(std::make_unique<Arlan>());
                 emplace_back(std::make_unique<Asta>());
+                emplace_back(std::make_unique<TailblazerFire>());
             }        
 
 

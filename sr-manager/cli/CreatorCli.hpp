@@ -48,10 +48,14 @@ namespace sr {
             for (auto i = 0; i < data.size(); i++) {
                 std::cout << Painter::white(std::format("({}) {}", i, data[i].name())) << std::endl;
             }
+            std::cout << Painter::white(std::format("({}) 随机选择", data.size())) << std::endl;
+            std::vector<int> temp;
             for (int i = 0; i < max_unit; i++) {
+                
                 while (true) {
-                    std::cin >> index >> star;
-                    if (index < 0 || index >= data.size()) {
+                    star = 0;
+                    std::cin >> index;// >> star;
+                    if (index < 0 || index >= data.size() + 1) {
                         std::cout << "输入序号不合法，请重新输入" << std::endl;
                         continue;
                     }
@@ -59,6 +63,12 @@ namespace sr {
                         std::cout << "输入星级不合法，请重新输入" << std::endl;
                         continue;
                     }
+                    if (index == data.size()) {
+                        do {
+                            index = Random::get(0, data.size() - 1);
+                        } while (std::find(temp.begin(), temp.end(), index) != temp.end());
+                    }
+                    temp.push_back(index);
                     break;
                 }
                 std::cout << Painter::yellow(std::format("{}（{}★）已被选择", data[index].name(), star)) << std::endl;

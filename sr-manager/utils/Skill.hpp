@@ -140,7 +140,7 @@ namespace sr {
 
     public:
         virtual const char* name() const = 0; // 技能名称
-        virtual std::string description() const = 0; // 技能描述
+        virtual std::string description() const { return ""; } // 技能描述
         virtual std::vector<Tag> tags() const = 0; // 技能标签
         virtual BattleUnit& target_ai(Battle& battle, BattleUnit& user) const = 0; // 智能指定技能目标
         virtual void apply(Battle& battle, BattleUnit& user, BattleUnit& target) const = 0; // 技能效果
