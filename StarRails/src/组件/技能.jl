@@ -16,7 +16,9 @@ Base.in(性质::标签.性质, 技能::技能)::Bool = 性质 in 性质列表(�
 
 include("技能解析器.jl")
 include("变量定义.jl")
+include("发动条件.jl")
 include("单体攻击.jl")
+include("扩散攻击.jl")
 include("../事件/使用技能.jl")
 
 # 每个技能的基本要素
@@ -74,6 +76,11 @@ macro 创建技能(技能类型::Symbol, 技能名::Symbol, 技能定义::Expr)
                 $(解析器.对目标的效果)
             end
             $(解析器.生效后流程...)
+        end
+
+        function $(esc(:可以使用))($(esc(:战场))::战场, $(esc(:技能))::$(esc(技能名)))::Bool
+            角色 = 技能.来源
+            $(解析器.判定条件)
         end
 
     end
