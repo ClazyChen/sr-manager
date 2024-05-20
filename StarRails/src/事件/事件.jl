@@ -45,15 +45,6 @@ macro 触发事件(效果::Expr)
     end
 end
 
-# 生成默认的构造函数
-macro 默认构造函数()
-    quote
-        function $(esc(当前上下文.事件名))(; $(esc(:事件))::事件)
-            new(事件.战场, 事件.性质列表, 事件.来源, 事件.目标)
-        end
-    end
-end
-
 # 将所有事件包含进来
 include("消灭.jl")
 include("致命.jl")

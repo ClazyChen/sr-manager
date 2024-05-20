@@ -9,11 +9,11 @@ function 战技点(战场::战场, 角色::角色)::进度
     return 进度"0/0"
 end
 
-# macro 持有战技点()
-#     quote
-#         战技点(战场, 角色).当前
-#     end
-# end
+macro 持有战技点()
+    quote
+        战技点(战场, 角色).当前
+    end
+end
 
 function 战技点变化!(战场::战场; 角色::角色, 数值::Int)
     if 角色.队伍 == 蓝方
