@@ -2,6 +2,7 @@
 
 include("星穹列车/开拓者▪物理.jl")
 include("星穹列车/丹恒.jl")
+include("星穹列车/姬子.jl")
 
 using InteractiveUtils
 

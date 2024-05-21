@@ -2,6 +2,7 @@
 
 include("单体攻击.jl")
 include("扩散攻击.jl")
+include("全体攻击.jl")
 
 # 选择目标的函数
 function 指定目标!(战场::战场, 技能::技能)::Float64
@@ -23,15 +24,15 @@ function 指定目标!(战场::战场, 技能::技能)::Float64
         end
         return 目标选择结果[2]
     end
+    if 全体攻击 in 技能
+        目标选择结果 = 选择全体攻击的目标(战场, 技能.来源, 技能.威力)
+        技能.目标 = 目标选择结果[1]
+        return 目标选择结果[2]
+    end
     return -Inf
 end
 
 # 指定目标方式的宏
 macro 目标(指定方式::Symbol)
     push!(解析器.默认性质列表, eval(指定方式))
-    # if 指定方式 == :单体攻击
-    #     push!(解析器.默认性质列表, 单体攻击)
-    # elseif 指定方式 == :扩散攻击
-    #     push!(解析器.默认性质列表, 扩散攻击)
-    # end
 end
