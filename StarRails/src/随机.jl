@@ -8,3 +8,5 @@ module 随机
 export 随机数, 随机判定
 
 end
+
+using .随机

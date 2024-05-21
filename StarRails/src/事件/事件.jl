@@ -58,20 +58,26 @@ function 触发时机!(事件::事件, 时机::标签.触发时机)
     按照结算次序进行(事件.战场, 操作 = 角色 -> _触发时机!(事件, 角色, 时机))
 end
 
+# 空事件
+@创建事件 空事件 begin 
+    function 空事件(战场::战场, 目标::角色)
+        new(战场, [], 目标, 目标)
+    end
+end
+
 # 将所有事件包含进来
 include("进入战斗.jl")
+include("../持续状态/持续状态.jl")
 include("消灭.jl")
 include("致命.jl")
 include("损失生命.jl")
 include("发动攻击.jl")
+
+include("../持续状态/裂伤.jl")
 include("造成击破.jl")
 include("造成削韧.jl")
+
 include("获得战技点.jl")
 include("消耗战技点.jl")
 include("获得能量.jl")
 include("消耗能量.jl")
-
-# 空事件
-struct 空事件 <: 事件 end
-
-const 事件占位符 = 空事件()

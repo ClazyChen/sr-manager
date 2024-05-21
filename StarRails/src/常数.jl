@@ -17,3 +17,5 @@ const 标准终结技削韧 = 4
 const 标准终结技副目标削韧 = 2
 
 end
+
+using .常数
