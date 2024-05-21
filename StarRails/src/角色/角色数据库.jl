@@ -1,6 +1,7 @@
 # 包含所有角色的数据库
 
 include("星穹列车/开拓者▪物理.jl")
+include("星穹列车/丹恒.jl")
 
 using InteractiveUtils
 

@@ -68,6 +68,7 @@ end
 # 将所有事件包含进来
 include("进入战斗.jl")
 include("../持续状态/持续状态.jl")
+include("解除负面状态.jl")
 include("消灭.jl")
 include("致命.jl")
 include("损失生命.jl")
