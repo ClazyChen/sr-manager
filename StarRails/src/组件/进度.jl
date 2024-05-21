@@ -15,10 +15,18 @@ end
 Base.convert(::Type{Int}, x::进度) = x.当前
 
 # 重载 + - += -= 运算符，只对当前进行操作
-Base.:+(x::进度, y::Real) = 进度(当前 = x.当前 + y, 上限 = x.上限, 放大十倍 = x.放大十倍)
-Base.:-(x::进度, y::Real) = x + (-y)
-Base.:+(x::Real, y::进度) = y + x
-Base.:-(x::Real, y::进度) = y + (-x)
+Base.:+(x::进度, y::Int) = 进度(当前 = x.当前 + y, 上限 = x.上限, 放大十倍 = x.放大十倍)
+Base.:-(x::进度, y::Int) = x + (-y)
+Base.:+(x::Int, y::进度) = y + x
+Base.:-(x::Int, y::进度) = y + (-x)
+
+Base.:+(x::进度, y::AbstractFloat) = 进度(当前 = x.当前 + round(Int, y * 10), 上限 = x.上限, 放大十倍 = x.放大十倍)
+Base.:-(x::进度, y::AbstractFloat) = x + (-y)
+Base.:+(x::AbstractFloat, y::进度) = y + x
+Base.:-(x::AbstractFloat, y::进度) = y + (-x)
+
+Base.:>>(x::进度, y::Int) = 进度(当前 = x.当前 + y, 上限 = x.上限 + y, 放大十倍 = x.放大十倍)
+Base.:>>(x::进度, y::AbstractFloat) = 进度(当前 = x.当前 + round(Int, y * 10), 上限 = x.上限 + round(Int, y * 10), 放大十倍 = x.放大十倍)
 
 # 可以使用 进度"1/3" 来创建一个进度
 macro 进度_str(x)

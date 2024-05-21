@@ -17,6 +17,7 @@ include("控制台/战场交互界面.jl")
 
 # 加载事件
 include("事件/事件.jl")
+include("持续状态/持续状态.jl")
 
 # 加载技能
 include("组件/技能.jl")

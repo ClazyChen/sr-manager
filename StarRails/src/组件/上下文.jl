@@ -4,7 +4,7 @@ mutable struct 上下文
     角色名::Symbol
     事件名::Symbol
     技能名::Symbol
-    当前角色的持有技能::Array{Symbol}
+    当前角色的持有技能::Vector{Symbol}
     上下文() = new(:无, :无, :无)
 end
 

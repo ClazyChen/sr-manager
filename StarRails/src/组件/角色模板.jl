@@ -51,7 +51,7 @@ end
 
 macro 角色创建完成()
 
-    生成技能::Array{Expr} = []
+    生成技能::Vector{Expr} = []
     for 技能名 in 当前上下文.当前角色的持有技能
         push!(生成技能, quote
             push!(角色.技能列表, $(技能名)(角色))

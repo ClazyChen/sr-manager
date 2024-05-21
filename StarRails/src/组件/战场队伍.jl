@@ -9,12 +9,6 @@ function 战技点(战场::战场, 角色::角色)::进度
     return 进度"0/0"
 end
 
-macro 持有战技点()
-    quote
-        战技点(战场, 角色).当前
-    end
-end
-
 function 战技点变化!(战场::战场; 角色::角色, 数值::Int)
     if 角色.队伍 == 蓝方
         战场.蓝方战技点 += 数值
@@ -57,4 +51,17 @@ function 右侧角色(战场::战场, 角色::角色)
         return nothing
     end
     return 我方[序号]
+end
+
+function 按照结算次序进行(战场::战场; 操作::Function)
+    蓝方角色 = 战场.蓝方角色
+    红方角色 = 战场.红方角色
+    for i in 1:max(length(蓝方角色), length(红方角色))
+        if i <= length(蓝方角色)
+            操作(蓝方角色[i])
+        end
+        if i <= length(红方角色)
+            操作(红方角色[i])
+        end
+    end
 end
