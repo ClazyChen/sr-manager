@@ -71,9 +71,21 @@ include("../持续状态/持续状态.jl")
 include("消灭.jl")
 include("致命.jl")
 include("损失生命.jl")
+
+include("../持续状态/护盾.jl")
 include("发动攻击.jl")
 
 include("../持续状态/裂伤.jl")
+include("../持续状态/灼烧.jl")
+include("../持续状态/冻结.jl")
+include("../持续状态/触电.jl")
+include("../持续状态/风化.jl")
+include("../持续状态/减速.jl")
+include("../持续状态/加速.jl")
+include("../持续状态/属性提升.jl")
+include("../持续状态/属性降低.jl")
+include("../持续状态/嘲讽.jl")
+
 include("造成击破.jl")
 include("造成削韧.jl")
 
