@@ -11,5 +11,9 @@ const 默认最大战技点 = 5
 
 const 标准普攻威力 = 100
 const 标准普攻削韧 = 2
+const 标准战技削韧 = 3
+const 标准战技副目标削韧 = 2
+const 标准终结技削韧 = 4
+const 标准终结技副目标削韧 = 2
 
 end

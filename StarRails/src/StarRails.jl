@@ -24,4 +24,6 @@ include("组件/技能.jl")
 # 加载角色
 include("角色/角色数据库.jl")
 
+include("组件/游戏流程.jl")
+
 end # module StarRails
