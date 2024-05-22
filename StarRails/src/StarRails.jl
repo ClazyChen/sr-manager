@@ -29,4 +29,4 @@ function 启动()
     执行游戏流程!(战场)
 end
 
-end # module StarRails
+end
