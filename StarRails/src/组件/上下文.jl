@@ -5,8 +5,15 @@ mutable struct 上下文
     事件名::Symbol
     技能名::Symbol
     当前角色的持有技能::Vector{Symbol}
-    上下文() = new(:无, :无, :无)
+    是否不显示下一条信息::Bool
+    上下文() = new(:无, :无, :无, [], false)
 end
 
 # 全局实现一个角色上下文
 const 当前上下文 = 上下文()
+
+macro 不显示()
+    quote
+        当前上下文.是否不显示下一条信息 = true
+    end
+end

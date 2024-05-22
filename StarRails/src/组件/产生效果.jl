@@ -8,6 +8,9 @@ macro 效果(效果目标, 说明::Expr)
     push!(解析器.效果列表, quote
         效果触发目标 = $效果目标
         for 目标 in 效果触发目标
+            if 事件 isa 使用技能
+                事件.目标 = 目标
+            end
             $说明
         end
     end)
