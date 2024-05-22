@@ -57,10 +57,10 @@ function 按照结算次序进行(战场::战场; 操作::Function)
     蓝方角色 = 战场.蓝方角色
     红方角色 = 战场.红方角色
     for i in 1:max(length(蓝方角色), length(红方角色))
-        if i <= length(蓝方角色)
+        if i <= length(蓝方角色) && 蓝方角色[i].存活
             操作(蓝方角色[i])
         end
-        if i <= length(红方角色)
+        if i <= length(红方角色) && 红方角色[i].存活
             操作(红方角色[i])
         end
     end

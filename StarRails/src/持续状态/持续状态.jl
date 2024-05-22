@@ -13,6 +13,7 @@ include("回合结束.jl")
 是持续伤害类状态(状态::持续状态) = false
 是控制类状态(状态::持续状态) = false
 Base.in(持续伤害类型::Type, 角色::角色) = any(状态 isa 持续伤害类型, 角色.状态列表)
+Base.in(性质::标签.性质, 状态::持续状态) = 性质 in 状态.性质列表
 
 macro 创建持续状态(状态名::Symbol, 定性::Symbol, 状态定义::Expr)
     状态名字符串 = String(状态名)
@@ -23,6 +24,7 @@ macro 创建持续状态(状态名::Symbol, 定性::Symbol, 状态定义::Expr)
             来源::角色
             目标::角色
             持续时间::Int
+            性质列表::Vector{标签.性质}
             $(esc(状态定义))
         end
 
