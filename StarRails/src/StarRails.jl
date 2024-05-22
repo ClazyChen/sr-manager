@@ -23,4 +23,10 @@ include("角色/角色数据库.jl")
 
 include("组件/游戏流程.jl")
 
+# 启动游戏
+function 启动()
+    战场 = 运行()
+    执行游戏流程!(战场)
+end
+
 end # module StarRails
