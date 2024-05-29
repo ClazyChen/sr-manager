@@ -105,3 +105,12 @@ macro 创建技能(技能类型::Symbol, 技能名::Symbol, 技能定义::Expr)
 end
 
 include("技能模板.jl")
+
+function 获取技能(目标::角色, 技能类型::Type)
+    for 技能 in 目标.技能列表
+        if 技能 isa 技能类型
+            return 技能
+        end
+    end
+    nothing
+end
