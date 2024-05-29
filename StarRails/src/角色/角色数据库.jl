@@ -5,6 +5,10 @@ include("星穹列车/丹恒.jl")
 include("星穹列车/姬子.jl")
 include("星穹列车/瓦尔特.jl")
 include("星穹列车/三月七.jl")
+include("黑塔空间站/黑塔.jl")
+include("黑塔空间站/阿兰.jl")
+include("黑塔空间站/艾丝妲.jl")
+include("贝洛伯格/开拓者火.jl")
 
 using InteractiveUtils
 
