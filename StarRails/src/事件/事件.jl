@@ -77,6 +77,7 @@ include("损失生命.jl")
 
 include("../持续状态/护盾.jl")
 include("../持续状态/抗性降低.jl")
+include("../持续状态/攻击强效.jl")
 include("发动攻击.jl")
 
 include("回复生命.jl")

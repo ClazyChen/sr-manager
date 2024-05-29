@@ -13,6 +13,7 @@ include("贝洛伯格/桑博.jl")
 include("贝洛伯格/布洛妮娅.jl")
 include("贝洛伯格/娜塔莎.jl")
 include("贝洛伯格/虎克.jl")
+include("贝洛伯格/克拉拉.jl")
 
 using InteractiveUtils
 
