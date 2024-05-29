@@ -79,6 +79,10 @@ include("../持续状态/护盾.jl")
 include("../持续状态/抗性降低.jl")
 include("发动攻击.jl")
 
+include("回复生命.jl")
+include("发动治疗.jl")
+include("../持续状态/复苏.jl")
+
 include("../持续状态/裂伤.jl")
 include("../持续状态/灼烧.jl")
 include("../持续状态/冻结.jl")
