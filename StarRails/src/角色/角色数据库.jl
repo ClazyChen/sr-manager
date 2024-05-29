@@ -9,6 +9,7 @@ include("黑塔空间站/黑塔.jl")
 include("黑塔空间站/阿兰.jl")
 include("黑塔空间站/艾丝妲.jl")
 include("贝洛伯格/开拓者火.jl")
+include("贝洛伯格/桑博.jl")
 
 using InteractiveUtils
 

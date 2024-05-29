@@ -26,13 +26,7 @@ end
     @战技模板 begin
         @随机攻击
         @效果 使用者(技能) begin
-            技能不重复目标 = []
-            for 目标 in 技能.目标
-                if !(目标 in 技能不重复目标)
-                    push!(技能不重复目标, 目标)
-                end
-            end
-            目标.技力 += length(技能不重复目标)
+            目标.技力 += length(不重复目标(技能))
         end
     end
 end
