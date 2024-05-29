@@ -74,8 +74,6 @@ macro 创建技能(技能类型::Symbol, 技能名::Symbol, 技能定义::Expr)
 
     quote
 
-        $指定目标表达式
-
         mutable struct $技能名 <: 技能
 
             名称::String
@@ -100,6 +98,8 @@ macro 创建技能(技能类型::Symbol, 技能名::Symbol, 技能定义::Expr)
             角色 = 技能.来源
             $(解析器.判定条件)
         end
+
+        $指定目标表达式
 
     end
 end
